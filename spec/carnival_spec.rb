@@ -197,11 +197,12 @@ describe Carnival do
       jeffco_fair.admit(sally)
       jeffco_fair.admit(johnny)
 
-      winner = jeffco_fair.draw_lottery_winner(bumper_cars)
+      winner_name = jeffco_fair.draw_lottery_winner(bumper_cars)
+      winner = jeffco_fair.attendees.find {|attendee| attendee.name == winner_name}
       expect(jeffco_fair.ticket_lottery_contestants(bumper_cars).include?(winner)).to be true
     end
 
-    it 'returns a lottery winner from the contestants list' do
+    it 'returns nil if there are no contestants' do
       jeffco_fair = Carnival.new("Jefferson County Fair")
       ferris_wheel = Ride.new({name: 'Ferris Wheel', cost: 0})
       bumper_cars = Ride.new({name: 'Bumper Cars', cost: 10})
@@ -245,7 +246,7 @@ describe Carnival do
       jeffco_fair.admit(bob)
       jeffco_fair.admit(sally)
       jeffco_fair.admit(johnny)
-      allow(jeffco_fair).to receive(:draw_lottery_winner) {[johnny]}
+      allow(jeffco_fair).to receive(:draw_lottery_winner) {"Johnny"}
 
       expected = "📣 Johnny has won a ticket for the Bumper Cars! 🥳"
       expect(jeffco_fair.announce_lottery_winner(bumper_cars)).to eq expected

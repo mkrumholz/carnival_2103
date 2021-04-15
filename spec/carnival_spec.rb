@@ -39,4 +39,27 @@ describe Carnival do
       expect(jeffco_fair.rides).to eq expected
     end
   end
+
+  describe '#recommend_rides' do
+    it 'recommends rides to an attendee that match their interests' do
+      jeffco_fair = Carnival.new("Jefferson County Fair")
+      ferris_wheel = Ride.new({name: 'Ferris Wheel', cost: 0})
+      bumper_cars = Ride.new({name: 'Bumper Cars', cost: 10})
+      scrambler = Ride.new({name: 'Scrambler', cost: 15})
+      bob = Attendee.new('Bob', 20)
+      sally = Attendee.new('Sally', 20)
+
+      jeffco_fair.add_ride(ferris_wheel)
+      jeffco_fair.add_ride(bumper_cars)
+      jeffco_fair.add_ride(scrambler)
+      bob.add_interest('Ferris Wheel')
+      bob.add_interest('Bumper Cars')
+      sally.add_interest('Scrambler')
+
+      bob_expected = [ferris_wheel, bumper_cars]
+      sally_expected = [scrambler]
+      expect(jeffco_fair.recommend_rides(bob)).to eq bob_expected
+      expect(jeffco_fair.recommend_rides(sally)).to eq sally_expected
+    end
+  end
 end

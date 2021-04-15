@@ -9,5 +9,11 @@ class Carnival
 
   def add_ride(ride)
     @rides << ride
-  end 
+  end
+
+  def recommend_rides(attendee)
+    @rides.find_all do |ride|
+      attendee.interests.include?(ride.name)
+    end
+  end
 end

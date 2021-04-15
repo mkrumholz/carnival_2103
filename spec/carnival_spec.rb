@@ -248,7 +248,7 @@ describe Carnival do
       allow(jeffco_fair).to receive(:draw_lottery_winner) {[johnny]}
 
       expected = "📣 Johnny has won a ticket for the Bumper Cars! 🥳"
-      expect(jeffco_fair.announce_lottery_winner(ride)).to eq expected
+      expect(jeffco_fair.announce_lottery_winner(bumper_cars)).to eq expected
     end
   end
 end

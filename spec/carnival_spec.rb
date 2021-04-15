@@ -94,4 +94,34 @@ describe Carnival do
       expect(jeffco_fair.attendees).to eq expected
     end
   end
+
+  describe '#attendees_by_ride_interest' do
+    it 'returns hash with rides as keys and interested attendees as values' do
+      jeffco_fair = Carnival.new("Jefferson County Fair")
+      ferris_wheel = Ride.new({name: 'Ferris Wheel', cost: 0})
+      bumper_cars = Ride.new({name: 'Bumper Cars', cost: 10})
+      scrambler = Ride.new({name: 'Scrambler', cost: 15})
+      bob = Attendee.new('Bob', 20)
+      sally = Attendee.new('Sally', 20)
+      johnny = Attendee.new('Johnny', 5)
+
+      jeffco_fair.add_ride(ferris_wheel)
+      jeffco_fair.add_ride(bumper_cars)
+      jeffco_fair.add_ride(scrambler)
+      bob.add_interest('Ferris Wheel')
+      bob.add_interest('Bumper Cars')
+      sally.add_interest('Bumper Cars')
+      johnny.add_interest('Bumper Cars')
+      jeffco_fair.admit(bob)
+      jeffco_fair.admit(sally)
+      jeffco_fair.admit(johnny)
+
+      expected = {
+        ferris_wheel => [bob],
+        bumper_cars => [bob, sally, johnny],
+        scrambler => []
+      }
+      expect(jeffco_fair.attendees_by_ride_interest). to eq expected
+    end
+  end
 end

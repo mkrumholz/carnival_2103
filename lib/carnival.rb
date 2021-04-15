@@ -45,11 +45,8 @@ class Carnival
 
   def draw_lottery_winner(ride)
     contestants = ticket_lottery_contestants(ride)
-    if contestants.empty?
-      nil
-    else
-      ticket_lottery_contestants(ride).sample.name
-    end
+    return nil if contestants.empty?
+    ticket_lottery_contestants(ride).sample.name
   end
 
   def announce_lottery_winner(ride)

@@ -42,4 +42,8 @@ class Carnival
       attendee.spending_money < ride.cost
     end
   end
+
+  def draw_lottery_winner(ride)
+    ticket_lottery_contestants(ride).sample
+  end
 end

@@ -25,10 +25,21 @@ class Carnival
 
   def attendees_by_ride_interest
     all_rides = @rides.reduce({}) do |all_rides, ride|
-      interested = @attendees.find_all do |attendee|
-        attendee.interests.include?(ride.name)
-      end
+      # interested = @attendees.find_all do |attendee|
+      #   attendee.interests.include?(ride.name)
+      # end
+      interested = interested_riders(ride)
       all_rides.update(ride => interested)
     end
+  end
+
+  def interested_riders(ride)
+    @attendees.find_all do |attendee|
+      attendee.interests.include?(ride.name)
+    end
+  end
+
+  def ticket_lottery_contestants
+
   end
 end

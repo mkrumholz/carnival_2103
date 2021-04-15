@@ -22,4 +22,13 @@ class Carnival
   def admit(attendee)
     @attendees << attendee
   end
+
+  def attendees_by_ride_interest
+    all_rides = @rides.reduce({}) do |all_rides, ride|
+      interested = @attendees.find_all do |attendee|
+        attendee.interests.include?(ride.name)
+      end
+      all_rides.update(ride => interested)
+    end
+  end
 end
